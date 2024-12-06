@@ -43,6 +43,9 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Surname)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsRetired)
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -55,7 +58,9 @@
 					        <td>
 						        @Html.DisplayFor(modelItem => item.Surname)
 					        </td>
-
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsRetired)
+                            </td>
 					        <td class="text-end w-25">
 
                                 @*<a href="/Directors/Details/1">Details</a>*@

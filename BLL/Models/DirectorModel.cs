@@ -1,4 +1,5 @@
 ﻿using BLL.DAL;
+using System.ComponentModel;
 
 namespace BLL.Models
 {
@@ -7,5 +8,8 @@ namespace BLL.Models
         public Director Record { get; set; }
         public string Name => Record.Name;
         public string Surname => Record.Surname;
+
+        [DisplayName("Retired")]
+        public string IsRetired => Record.IsRetired ? "Retired" : "Not Retired";
     }
 }

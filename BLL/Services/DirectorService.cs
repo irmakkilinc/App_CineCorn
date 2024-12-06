@@ -29,6 +29,7 @@ namespace BLL.Services
                 return Error("Director with the same name exists!");
             record.Name = record.Name?.Trim();
             record.Surname = record.Surname?.Trim();
+            record.IsRetired = record.IsRetired;
             _db.Directors.Add(record);
             _db.SaveChanges();
             return Success("Director created successfully.");

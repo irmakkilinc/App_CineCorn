@@ -19,6 +19,7 @@ namespace BLL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
+                    IsRetired = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {

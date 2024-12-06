@@ -13,6 +13,7 @@ namespace BLL.DAL
         [Required]
         [StringLength(70)]
         public string Surname { get; set; }
+        public bool IsRetired { get; set; }
         public List<Movie> Movies { get; set; } = new List<Movie>();
     }
 }

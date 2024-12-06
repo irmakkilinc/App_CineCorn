@@ -38,6 +38,9 @@ namespace BLL.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
+                    b.Property<bool>("IsRetired")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Directors");
