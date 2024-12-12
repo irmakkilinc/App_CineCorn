@@ -15,6 +15,7 @@ namespace BLL.Services
 
     }
     public class DirectorService : ServiceBase, IDirectorService
+
     {
         public DirectorService(Db db) : base(db)
         {
@@ -37,24 +38,30 @@ namespace BLL.Services
         public ServiceBase Update(Director record)
         {
             if (_db.Directors.Any(d => d.Id != record.Id && d.Name.ToUpper() == record.Name.ToUpper().Trim()))
-                return Error("Director with the same exists!");
+                return Error("Director with the same name exists!");
+
             var entity = _db.Directors.SingleOrDefault(d => d.Id == record.Id);
             if (entity is null)
-                return Error("Species can not be found!");
+                return Error("Director cannot be found!");
+
             entity.Name = record.Name?.Trim();
-            entity.Surname = record.Name?.Trim();
-            _db.Directors.Update(entity);
+            entity.Surname = record.Surname?.Trim();
+
+            _db.Entry(entity).State = EntityState.Modified;
             _db.SaveChanges();
+
             return Success("Director updated successfully.");
         }
-        
+
         public ServiceBase Delete(int id)
         {
             var entity = _db.Directors.Include(d => d.Movies).SingleOrDefault(d => d.Id == id);
             if (entity is null)
-                return Error("Director can not be found!");
+                return Error("Director cannot be found!");
+
             if (entity.Movies.Any())
                 return Error("Director has relational movie.");
+
             _db.Directors.Remove(entity);
             _db.SaveChanges();
             return Success("Director deleted successfully.");

@@ -18,12 +18,12 @@ namespace MVC.Controllers
 
         /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
         //private readonly IService<{Entity}, {Entity}Model> _{Entity}Service;
-
+        
         public DirectorsController(
             IDirectorService directorService
 
-            /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
-            //, Service<{Entity}, {Entity}Model> {Entity}Service
+        /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
+        //, Service<{Entity}, {Entity}Model> {Entity}Service
         )
         {
             _directorService = directorService;
