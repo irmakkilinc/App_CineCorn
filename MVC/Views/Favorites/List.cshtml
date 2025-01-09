@@ -34,8 +34,11 @@
             <table class="table table-striped table-hover">
                 <thead class="table-secondary">
                     <tr>
-                        <th>
+                        <th class="col-10">
                             @Html.DisplayNameFor(model => model.MovieName)
+                        </th>
+                        <th class="col-2 text-end">
+                            Actions
                         </th>
                     </tr>
                 </thead>
@@ -46,7 +49,7 @@
                             <td class="col-10">
                                 @Html.DisplayFor(modelItem => item.MovieName)
                             </td>
-                            <td class="text-end col-2">
+                            <td class="col-2 text-end">
                                 <a asp-action="Remove" asp-route-movieId="@item.MovieId">Remove from Favorites</a>
                             </td>
                         </tr>
