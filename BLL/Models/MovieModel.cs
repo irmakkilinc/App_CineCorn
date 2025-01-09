@@ -21,7 +21,7 @@ namespace BLL.Models
         //public List<Genre> GenreList => Record.MovieGenres?.Select(mg => mg.Genre).ToList();
 
         //Way 2:
-        public string Genres => string.Join("<br>", Record.MovieGenres?.Select(mg => mg.Genre?.Name) ?? new List<string>());
+        public string Genres => string.Join(" - ", Record.MovieGenres?.Select(mg => mg.Genre?.Name) ?? new List<string>());
 
         [DisplayName("Genres")]
         public List<int> GenreIds

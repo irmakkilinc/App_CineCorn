@@ -4,14 +4,14 @@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
 
 @{
-    var containerDivClass = "container-fluid";
+    var containerDivClass = "container"; // container-fluid yerine container kullanıldı
 }
 @{
     ViewData["Title"] = "Favorites";
 }
 
 <div class="@containerDivClass">
-    <h3>@ViewData["Title"]</h3>
+    <h3 style="color: darkorange;">@ViewData["Title"]</h3>
     <hr />
 </div>
 
@@ -40,16 +40,17 @@
                     </tr>
                 </thead>
                 <tbody>
-		            @foreach (var item in Model) {
-				        <tr>
-					        <td>
-						        @Html.DisplayFor(modelItem => item.MovieName)
-					        </td>
-					        <td class="text-end w-25">
-						        <a asp-action="Remove" asp-route-movieId="@item.MovieId">Remove from Favorites</a>&nbsp;|&nbsp;
-					        </td>
-				        </tr>
-		            }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="col-10">
+                                @Html.DisplayFor(modelItem => item.MovieName)
+                            </td>
+                            <td class="text-end col-2">
+                                <a asp-action="Remove" asp-route-movieId="@item.MovieId">Remove from Favorites</a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

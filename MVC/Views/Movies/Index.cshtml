@@ -47,6 +47,9 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Director)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Genres)
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -61,7 +64,10 @@
 					        </td>
 					        <td>
 						        @Html.DisplayFor(modelItem => item.Director)
-					        </td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Genres)
+                            </td>
 					        <td class="text-end w-25">
                                 @if (User.Identity.IsAuthenticated)
                                 {
