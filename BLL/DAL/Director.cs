@@ -14,5 +14,10 @@ namespace BLL.DAL
         [StringLength(70)]
         public string Surname { get; set; }
         public List<Movie> Movies { get; set; } = new List<Movie>();
+
+        //internal string Select(Func<object, object> value)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

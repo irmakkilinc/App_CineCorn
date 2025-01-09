@@ -47,7 +47,7 @@ namespace BLL.Services
             entity.Name = record.Name?.Trim();
             entity.Surname = record.Surname?.Trim();
 
-            _db.Entry(entity).State = EntityState.Modified;
+            _db.Directors.Update(entity);
             _db.SaveChanges();
 
             return Success("Director updated successfully.");

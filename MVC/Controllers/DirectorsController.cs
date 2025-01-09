@@ -6,11 +6,14 @@ using BLL.Services.Bases;
 using BLL.Models;
 using BLL.DAL;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
+    //Way 2:
+    [Authorize(Roles = "Admin")]
     public class DirectorsController : MvcController
     {
         // Service injections:
@@ -33,6 +36,8 @@ namespace MVC.Controllers
         }
 
         // GET: Directors
+        //Way 1:
+        //[Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             // Get collection service logic:

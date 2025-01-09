@@ -5,11 +5,13 @@ using BLL.Services.Bases;
 using BLL.Models;
 using BLL.DAL;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class MoviesController : MvcController
     {
         // Service injections:
@@ -17,24 +19,26 @@ namespace MVC.Controllers
         private readonly IDirectorService _directorService;
 
         /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
-        //private readonly IService<{Entity}, {Entity}Model> _{Entity}Service;
+        private readonly IService<Genre, GenreModel> _genreService;
 
         public MoviesController(
             IService<Movie, MovieModel> movieService
             , IDirectorService directorService
 
             /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
-            //, Service<{Entity}, {Entity}Model> {Entity}Service
+            , IService<Genre, GenreModel> genreService
+
         )
         {
             _movieService = movieService;
             _directorService = directorService;
 
             /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
-            //_{Entity}Service = {Entity}Service;
+            _genreService = genreService;
         }
 
         // GET: Movies
+        [AllowAnonymous]
         public IActionResult Index()
         {
             // Get collection service logic:
@@ -52,14 +56,19 @@ namespace MVC.Controllers
 
         protected void SetViewData()
         {
-            // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
             ViewData["DirectorId"] = new SelectList(_directorService.Query().ToList(), "Record.Id", "Name");
-            
-            /* Can be uncommented and used for many to many relationships. {Entity} may be replaced with the related entiy name in the controller and views. */
-            //ViewBag.{Entity}Ids = new MultiSelectList(_{Entity}Service.Query().ToList(), "Record.Id", "Name");
+
+            // Genre verisini doğrudan kontrol et:
+            var genres = _genreService.Query()
+                .Select(g => new { Id = g.Record.Id, Name = g.Record.Name })
+                .ToList();
+
+            ViewBag.GenreIds = new MultiSelectList(genres, "Id", "Name");
         }
 
+
         // GET: Movies/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             SetViewData();
@@ -69,6 +78,7 @@ namespace MVC.Controllers
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(MovieModel movie)
         {
             if (ModelState.IsValid)
@@ -87,6 +97,7 @@ namespace MVC.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
@@ -98,6 +109,7 @@ namespace MVC.Controllers
         // POST: Movies/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(MovieModel movie)
         {
             if (ModelState.IsValid)
@@ -116,8 +128,14 @@ namespace MVC.Controllers
         }
 
         // GET: Movies/Delete/5
+        //Way 2:
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
+            //way 1:
+            //if (!User.IsInRole("Admin"))
+            //    return RedirectToAction("Login", "Users");
+
             // Get item to delete service logic:
             var item = _movieService.Query().SingleOrDefault(q => q.Record.Id == id);
             return View(item);
@@ -126,6 +144,7 @@ namespace MVC.Controllers
         // POST: Movies/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:

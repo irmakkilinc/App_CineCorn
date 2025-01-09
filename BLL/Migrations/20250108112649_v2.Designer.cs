@@ -4,6 +4,7 @@ using BLL.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BLL.Migrations
 {
     [DbContext(typeof(Db))]
-    partial class DbModelSnapshot : ModelSnapshot
+    [Migration("20250108112649_v2")]
+    partial class v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,7 +132,12 @@ namespace BLL.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Roles");
                 });
@@ -195,10 +203,17 @@ namespace BLL.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("BLL.DAL.Role", b =>
+                {
+                    b.HasOne("BLL.DAL.Role", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("RoleId");
+                });
+
             modelBuilder.Entity("BLL.DAL.User", b =>
                 {
                     b.HasOne("BLL.DAL.Role", "Role")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -223,7 +238,7 @@ namespace BLL.Migrations
 
             modelBuilder.Entity("BLL.DAL.Role", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }
